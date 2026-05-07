@@ -21,13 +21,7 @@ public class ShootController : MonoBehaviour
         );
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            currentShoot.Shoot();
-        }
-    }
+   
 
     public void ActivateTripleShot()
     {

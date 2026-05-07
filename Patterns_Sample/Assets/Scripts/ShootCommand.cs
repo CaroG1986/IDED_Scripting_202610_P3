@@ -2,29 +2,71 @@ using UnityEngine;
 
 public class ShootCommand : MonoBehaviour, ICommand
 {
-    #region Bullet
-
     [Header("Bullet")]
     [SerializeField]
-    private Rigidbody bullet;
+    private float bulletSpeed = 3f;
 
+    [Header("Decorator")]
     [SerializeField]
-    private float bulletSpeed = 3F;
+    private float tripleShotDuration = 5f;
 
-    #endregion Bullet
+    private IShoot currentShoot;
 
-    private Transform BulletSpawnPoint => Player.Instance.BulletSpawnPoint;
+    private Transform BulletSpawnPoint =>
+        Player.Instance.BulletSpawnPoint;
 
-    private bool CanShoot => BulletSpawnPoint != null && bullet != null;
+    private void Start()
+    {
+        
+        currentShoot = new BasicShootDecorator(
+            null,
+            BulletSpawnPoint,
+            bulletSpeed
+        );
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Execute();
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            ActivateTripleShot();
+        }
+    }
 
     public void Execute()
     {
-        if (CanShoot)
-        {
-            Bullet bullet = Pool.Instance.GetBullet();
-            bullet.transform.position = BulletSpawnPoint.position;
-            bullet.transform.rotation = BulletSpawnPoint.rotation;
-            bullet.Rigidbody.AddForce(transform.up * bulletSpeed, ForceMode.Impulse);
-        }
+
+        currentShoot.Shoot();
+    }
+
+    public void ActivateTripleShot()
+    {
+       
+        currentShoot = new TripleShootDecorator(
+            currentShoot,
+            this,
+            BulletSpawnPoint,
+            bulletSpeed
+        );
+
+        
+        Invoke(
+            nameof(ReturnToNormalShot),
+            tripleShotDuration
+        );
+    }
+
+    private void ReturnToNormalShot()
+    {
+        currentShoot = new BasicShootDecorator(
+            null,
+            BulletSpawnPoint,
+            bulletSpeed
+        );
     }
 }
