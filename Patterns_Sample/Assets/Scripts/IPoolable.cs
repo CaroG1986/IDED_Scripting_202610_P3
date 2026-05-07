@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class IPoolable
+public interface IPoolable
 {
-    
+    void ResetObject(bool active);
 }
