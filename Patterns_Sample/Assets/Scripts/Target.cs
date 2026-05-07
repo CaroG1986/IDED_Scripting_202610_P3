@@ -13,6 +13,11 @@ public class Target : MonoBehaviour,
     private int currentHP;
 
     [SerializeField]
+    private TargetType targetType;
+
+    public TargetType TargetType => targetType;
+
+    [SerializeField]
     private int scoreAdd = 10;
 
     public delegate void OnTargetDestroyed(int scoreAdd);

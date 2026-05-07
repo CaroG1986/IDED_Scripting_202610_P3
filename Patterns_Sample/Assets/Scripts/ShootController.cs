@@ -13,7 +13,7 @@ public class ShootController : MonoBehaviour
 
     private void Start()
     {
-        // Decorator inicial
+        
         currentShoot = new BasicShootDecorator(
             null,
             Player.Instance.BulletSpawnPoint,

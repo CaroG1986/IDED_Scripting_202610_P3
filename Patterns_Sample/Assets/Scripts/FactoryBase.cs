@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class FactoryBase<T> : MonoBehaviour
     where T : IFactoryProduct
 {
-    private static FactoryBase<T> instance;
+    protected static FactoryBase<T> instance;
 
     public static FactoryBase<T> Instance => instance;
 
