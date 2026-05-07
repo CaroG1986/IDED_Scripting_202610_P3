@@ -13,7 +13,7 @@ public class ShootController : MonoBehaviour
 
     private void Start()
     {
-        
+       
         currentShoot = new BasicShootDecorator(
             null,
             Player.Instance.BulletSpawnPoint,
@@ -21,10 +21,15 @@ public class ShootController : MonoBehaviour
         );
     }
 
-   
+    
+    public void Shoot()
+    {
+        currentShoot.Shoot();
+    }
 
     public void ActivateTripleShot()
     {
+        
         currentShoot = new TripleShootDecorator(
             currentShoot,
             this,
@@ -32,13 +37,18 @@ public class ShootController : MonoBehaviour
             bulletSpeed
         );
 
+        StopAllCoroutines();
+
         StartCoroutine(TripleShotTimer());
     }
 
     private IEnumerator TripleShotTimer()
     {
-        yield return new WaitForSeconds(tripleShotDuration);
+        yield return new WaitForSeconds(
+            tripleShotDuration
+        );
 
+       
         currentShoot = new BasicShootDecorator(
             null,
             Player.Instance.BulletSpawnPoint,

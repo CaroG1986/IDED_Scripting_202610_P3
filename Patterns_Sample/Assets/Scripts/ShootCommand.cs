@@ -8,7 +8,7 @@ public class ShootCommand : MonoBehaviour, ICommand
 
     [Header("Decorator")]
     [SerializeField]
-    private float tripleShotDuration = 5f;
+    private float tripleShotDuration = 1f;
 
     private IShoot currentShoot;
 
